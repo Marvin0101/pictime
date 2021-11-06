@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function DragDropBox(){
   const [image, setImage] = useState<any>([]);
@@ -6,6 +6,8 @@ function DragDropBox(){
   const [dropdown, setDropdown] = useState<string>("Frühling");
   const [backColor, setBackcolor] = useState<string[]>([]);
   const [textColor, setTextcolor] = useState<string[]>([]);
+  const [sizePicker,setSizePicker] = useState<string>("normal");
+  const [imagesize, setImagesize] = useState<number>(300);
 
   const onImageChange = (event:any) => {
     console.log("onImageChange: event.target.files: "+event.target.files);
@@ -45,13 +47,44 @@ function DragDropBox(){
     console.log("X clicked, i=" +i);
     console.log(image);
   }
+
+  const handleSize = (event:any) => {
+    setSizePicker(event.target.value);
+    }
+
+  useEffect(() => {
+      console.log('fuck react should update the state immediatly, dumbass: '+sizePicker);
+   
+    switch(sizePicker) {
+      case "klein":
+        setImagesize(200);
+        console.log("klein");
+        break;
+      case "normal":
+        setImagesize(300);
+        console.log("normal");
+        break;
+      case "gross":
+        setImagesize(400);
+        console.log("groß");
+        break;
+    }
+  }, [sizePicker]);
+  
+
   console.log("Image 1 Url: "+image[0]);
+  console.log("Imagesize: "+sizePicker);
   return (
     <div>
+      <table style={{width:"100%"}}>
+        <tr>
+        
+        <td style={{width:"(100/3)%"}} ></td>
+        <td style={{width:"(100/3)%"}}>
       <label>Tag: </label>
 
       <select value={dropdown} id="tags" onChange={handleChange} className="filetype">
-          <option value="Frühling">Frühling</option>
+          <option value="Frühling" style={{backgroundColor:"orange"}}>Frühling</option>
           <option value="Sommer">Sommer</option>
           <option value="Herbst">Herbst</option>
           <option value="Winter">Winter</option>
@@ -70,14 +103,27 @@ function DragDropBox(){
         onClick={(event)=> {(event.target as HTMLInputElement).value = ""}} 
         accept="image/*"
       />
-      
+      </td>
+      <td style={{width:"calc(100%/3)"}}>
+      <span style={{float:"right"}}>
+      <label>Bildergröße: </label>
+
+      <select value={sizePicker} id="imagesize" onChange={handleSize}>
+          <option value="klein">Klein</option>
+          <option value="normal">Normal</option>
+          <option value="gross">Groß</option>
+      </select>
+      </span>
+      </td>
+      </tr>
+      </table>
       <p> Es {image.length === 1 ? "befindet": "befinden"} sich {image.length} {image.length === 1 ? "Bild": "Bilder"} in der Galerie.</p>
 
       <ul className="flex-container">
         {image.map((image:any, i:any) =>  
           <li key={i} className= "flex-item">
             <div className="container">
-              <img src={image} alt=""/>
+              <img src={image} alt="" height={imagesize}/>
               <div className="tag" style={{backgroundColor:backColor[i], color:textColor[i]}}>
                 {tag[i]}
               </div>
