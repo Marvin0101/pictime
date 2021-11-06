@@ -79,15 +79,15 @@ function DragDropBox(){
       <table style={{width:"100%"}}>
         <tr>
         
-        <td style={{width:"(100/3)%"}} ></td>
-        <td style={{width:"(100/3)%"}}>
+        <td style={{width:"calc(100%/3)"}} ></td>
+        <td style={{width:"calc(100%/3)"}}>
       <label>Tag: </label>
 
       <select value={dropdown} id="tags" onChange={handleChange} className="filetype">
-          <option value="Frühling" style={{backgroundColor:"orange"}}>Frühling</option>
-          <option value="Sommer">Sommer</option>
-          <option value="Herbst">Herbst</option>
-          <option value="Winter">Winter</option>
+          <option value="Frühling" style={{backgroundColor:"green"}}>Frühling</option>
+          <option value="Sommer" style={{backgroundColor:"#92AD40"}}>Sommer</option>
+          <option value="Herbst" style={{backgroundColor:"rgb(228, 81, 13)"}}>Herbst</option>
+          <option value="Winter" style={{backgroundColor:"white", color:"black"}}>Winter</option>
       </select>
 
       <label id="labelbutton" htmlFor="selectedFile"> 
