@@ -1,37 +1,29 @@
 import React, { useEffect, useState } from "react";
 
-function DragDropBox(){
+function Galerie(){
   const [image, setImage] = useState<any>([]);
   const [tag, setTag] = useState<string[]>([]);
-  const [dropdown, setDropdown] = useState<string>("Frühling");
+  const [dropdown, setDropdown] = useState<number>(0);
   const [backColor, setBackcolor] = useState<string[]>([]);
   const [textColor, setTextcolor] = useState<string[]>([]);
   const [sizePicker,setSizePicker] = useState<string>("normal");
   const [imagesize, setImagesize] = useState<number>(300);
+  const [tagList, setTagList] = useState<string[]>([]);
+  const [backColorList, setBackColorList] = useState<string[]>([]);
+  const [textColorList, setTextColorList] = useState<string[]>([]);
+  const [input, setInput] = useState<string>('');
+  const [inputColor, setInputColor] = useState<string>('#000000');
+  const [inputTextColor, setInputTextColor] = useState<string>('#FFFFFF');
 
   const onImageChange = (event:any) => {
     console.log("onImageChange: event.target.files: "+event.target.files);
     if (event.target.files && event.target.files[0]) {
       console.log("bin in if");
       setImage((image: any) => [...image, URL.createObjectURL(event.target.files[0])]);
-      setTag((tag: any) => [...tag, dropdown]);
-      switch(dropdown){
-        case "Frühling":
-          setBackcolor([...backColor,"green"]);
-          setTextcolor([...textColor,"white"]);
-          break;
-        case "Sommer":
-          setBackcolor([...backColor,"#92AD40"]);
-          setTextcolor([...textColor,"white"]);
-          break;
-        case "Herbst":
-          setBackcolor([...backColor,"rgb(228, 81, 13)"]);
-          setTextcolor([...textColor,"whiten"]);
-          break;
-        case "Winter":
-          setBackcolor([...backColor,"white"]);
-          setTextcolor([...textColor,"black"]);
-      }
+      setTag((tag: any) => [...tag, tagList[dropdown]]);
+      setBackcolor((backColor: any) =>[...backColor,backColorList[dropdown]]);
+      setTextcolor((backColor: any) =>[...textColor,textColorList[dropdown]]);
+
     }
   }
 
@@ -71,23 +63,43 @@ function DragDropBox(){
     }
   }, [sizePicker]);
   
+  const handleCreateTag = (event:any) => {
+    setTagList((tagList) => [...tagList, input]);
+    setBackColorList((backColorList) => [...backColorList, inputColor]);
+    setTextColorList((textColorList) => [...textColorList, inputTextColor]);
+  }
 
   console.log("Image 1 Url: "+image[0]);
   console.log("Imagesize: "+sizePicker);
+  console.log("TagList: "+tagList);
+  console.log("Dropdown: "+dropdown);
+  console.log("Backcolor: "+backColor);
+  console.log("Imagetags: "+tag);
+  console.log("Inputcolor: "+inputColor);
   return (
-    <div>
+    <div className="main">
       <table style={{width:"100%"}}>
         <tr>
         
-        <td style={{width:"calc(100%/3)"}} ></td>
+        <td style={{width:"calc(100%/3)"}} >
+        <span style={{float:"left"}}>
+          <label>Tagname: </label>
+          <input type="text" className="filetype" placeholder="Tagname" style={{width:"100px"}} value={input} onInput={(e) => setInput((e.target as HTMLTextAreaElement).value)}></input>
+          <label className="filetype">Tagfarbe: </label>
+          <input type="color" className="colorpicker" value={inputColor} onInput={(e) => setInputColor((e.target as HTMLTextAreaElement).value)}></input>
+          <label className="filetype">Textfarbe: </label>
+          <input type="color" className="colorpicker" value={inputTextColor} onInput={(e) => setInputTextColor((e.target as HTMLTextAreaElement).value)}></input>
+          <button onClick={handleCreateTag}>Tag erstellen</button><br/>
+          </span>
+        </td>
         <td style={{width:"calc(100%/3)"}}>
-      <label>Tag: </label>
-
+     
+      <label className="filetype">Tag wählen</label>
       <select value={dropdown} id="tags" onChange={handleChange} className="filetype">
-          <option value="Frühling" style={{backgroundColor:"green"}}>Frühling</option>
-          <option value="Sommer" style={{backgroundColor:"#92AD40"}}>Sommer</option>
-          <option value="Herbst" style={{backgroundColor:"rgb(228, 81, 13)"}}>Herbst</option>
-          <option value="Winter" style={{backgroundColor:"white", color:"black"}}>Winter</option>
+        <option value="(kein Tag)">(kein Tag)</option>
+        {tagList.map((tagList:string, i:number) => 
+            <option value={i} style={{backgroundColor:backColorList[i], color:textColorList[i]}}>{tagList}</option>
+        )}
       </select>
 
       <label id="labelbutton" htmlFor="selectedFile"> 
@@ -144,4 +156,6 @@ function DragDropBox(){
   )
 }
 
-export default DragDropBox;
+export default Galerie;
+
+
