@@ -22,7 +22,7 @@ function Galerie(){
       setImage((image: any) => [...image, URL.createObjectURL(event.target.files[0])]);
       setTag((tag: any) => [...tag, tagList[dropdown]]);
       setBackcolor((backColor: any) =>[...backColor,backColorList[dropdown]]);
-      setTextcolor((backColor: any) =>[...textColor,textColorList[dropdown]]);
+      setTextcolor((textColor: any) =>[...textColor,textColorList[dropdown]]);
 
     }
   }
