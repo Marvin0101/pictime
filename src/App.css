@@ -22,7 +22,7 @@ body{
   display: -webkit-flex;
   display: flex;
   flex-wrap: wrap;
-  min-height: 400px;
+  min-height: 50vh;
 }
 
 .flex-item {
@@ -107,6 +107,14 @@ img {
 
 .filetype {
   margin: 5px;
+}
+
+.colorpicker {
+  margin: 5px;
+  height: 30px; 
+  width: 30px; 
+  padding: 0px;
+  border-color: black;
 }
 
 header {
