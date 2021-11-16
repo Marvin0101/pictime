@@ -12,8 +12,8 @@ function Galerie(){
   const [backColorList, setBackColorList] = useState<string[]>([]);
   const [textColorList, setTextColorList] = useState<string[]>([]);
   const [input, setInput] = useState<string>('');
-  const [inputColor, setInputColor] = useState<string>('#000000');
-  const [inputTextColor, setInputTextColor] = useState<string>('#FFFFFF');
+  const [inputColor, setInputColor] = useState<string>('#d4d800');
+  const [inputTextColor, setInputTextColor] = useState<string>('#a43538');
 
   const onImageChange = (event:any) => {
     console.log("onImageChange: event.target.files: "+event.target.files);
@@ -89,7 +89,7 @@ function Galerie(){
           <input type="color" className="colorpicker" value={inputColor} onInput={(e) => setInputColor((e.target as HTMLTextAreaElement).value)}></input>
           <label className="filetype">Textfarbe: </label>
           <input type="color" className="colorpicker" value={inputTextColor} onInput={(e) => setInputTextColor((e.target as HTMLTextAreaElement).value)}></input>
-          <button onClick={handleCreateTag}>Tag erstellen</button><br/>
+          <button onClick={handleCreateTag} style={{backgroundColor:inputColor, color:inputTextColor}}>Tag erstellen</button><br/>
           </span>
         </td>
         <td style={{width:"calc(100%/3)"}}>
