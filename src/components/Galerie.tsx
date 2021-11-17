@@ -14,6 +14,7 @@ function Galerie() {
   const [input, setInput] = useState<string>('');
   const [inputColor, setInputColor] = useState<string>('#d4d800');
   const [inputTextColor, setInputTextColor] = useState<string>('#a43538');
+  const [filter, setFilter] = useState<number>();
 
   const onImageChange = (event: any) => {
     console.log("onImageChange: event.target.files: " + event.target.files);
@@ -69,6 +70,10 @@ function Galerie() {
     setTextColorList((textColorList) => [...textColorList, inputTextColor]);
   }
 
+  const handleFilter = (event: any) => {
+    setFilter(event.target.value);
+  }
+
   console.log("Image 1 Url: " + image[0]);
   console.log("Imagesize: " + sizePicker);
   console.log("TagList: " + tagList);
@@ -119,10 +124,13 @@ function Galerie() {
           <td style={{ width: "calc(200%/5)" }}>
             <span style={{ float: "right" }}>
               <label className="filetype">Filter: </label>
-              <select value="alle" id="imagesize">
+
+              <select value={filter} id="imagesize" onChange={handleFilter}>
                 <option value="alle">Alle</option>
                 <option value="keineTags">(Keine Tags)</option>
-
+                {tagList.map((tagList: string, i: number) =>
+                  <option value={i} style={{ backgroundColor: backColorList[i], color: textColorList[i] }}>{tagList}</option>
+                )}
               </select>
               <label className="filetype">Bildergröße: </label>
 
