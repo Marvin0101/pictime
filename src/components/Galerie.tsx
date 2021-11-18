@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 
 function Galerie() {
   const [image, setImage] = useState<any>([]);
-  
   const [tag, setTag] = useState<string[]>([]);
   const [dropdown, setDropdown] = useState<number>(0);
   const [backColor, setBackcolor] = useState<string[]>([]);
@@ -18,7 +17,13 @@ function Galerie() {
   const [filter, setFilter] = useState<number>(0);
   const [imageTagList, setImageTagList] = useState<number[]>([]);
   let filtered:string[] = [];
+  let filteredTag:string[] = [];
+  let filteredBackColor:string[] = [];
+  let filteredTextColor:string[] = [];
   let imageShown:string[] = [];
+  let tagShown:string[] = [];
+  let backColorShown:string[] = [];
+  let textColorShown:string[] = [];
   // const imageTagList:number[] = [];
 
   const onImageChange = (event: any) => {
@@ -80,13 +85,6 @@ function Galerie() {
     setFilter(parseInt(event.target.value));
   }
 
-  useEffect(() => {
-    console.log('Filter: ' + filter);
-    
-     // eslint-disable-line react-hooks/exhaustive-deps
-    
-  },[filter]); // eslint-disable-line react-hooks/exhaustive-deps
-
   console.log("Image " + image);
   console.log("Imagesize: " + sizePicker);
   console.log("TagList: " + tagList);
@@ -97,12 +95,26 @@ function Galerie() {
   console.log("ImageTagList: "+ imageTagList);
 
   let indices:number[] = [];
-  indices.push(imageTagList.indexOf(filter));
+
+  for (let i=0; i < imageTagList.length; i++ ){
+    if ( imageTagList[i] === filter ){
+        indices.push( i );
+    }
+}
+
   filtered = image.filter((x: any, index: any) => indices.includes(index));
+  filteredTag = tag.filter((x: any, index: any) => indices.includes(index));
+  filteredBackColor = backColor.filter((x: any, index: any) => indices.includes(index));
+  filteredTextColor = textColor.filter((x: any, index: any) => indices.includes(index));
   imageShown = filter !==0 ? filtered : image;
+  tagShown = filter !==0 ? filteredTag : tag;
+  backColorShown = filter !==0 ? filteredBackColor : backColor;
+  textColorShown = filter !==0 ? filteredTextColor : textColor;
 
   console.log("Imageshown: "+imageShown);
   console.log("filtered: "+filtered);
+  console.log("filteredTag: "+filteredTag);
+  console.log("Indices: "+indices);
   return (
     <div className="main">
       <table style={{ width: "100%" }}>
@@ -172,8 +184,8 @@ function Galerie() {
           <li key={i} className="flex-item">
             <div className="container">
               <img src={image} alt="" height={imagesize} />
-              <div className="tag" style={{ backgroundColor: backColor[i], color: textColor[i] }}>
-                {tag[i]}
+              <div className="tag" style={{ backgroundColor: backColorShown[i], color: textColorShown[i] }}>
+                {tagShown[i]}
               </div>
               <div className="close" onClick={() => handleDelete(i)}>
                 x
