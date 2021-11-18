@@ -14,6 +14,17 @@ function Galerie() {
   const [input, setInput] = useState<string>('');
   const [inputColor, setInputColor] = useState<string>('#d4d800');
   const [inputTextColor, setInputTextColor] = useState<string>('#a43538');
+  const [filter, setFilter] = useState<number>(0);
+  const [imageTagList, setImageTagList] = useState<number[]>([]);
+  let filtered:string[] = [];
+  let filteredTag:string[] = [];
+  let filteredBackColor:string[] = [];
+  let filteredTextColor:string[] = [];
+  let imageShown:string[] = [];
+  let tagShown:string[] = [];
+  let backColorShown:string[] = [];
+  let textColorShown:string[] = [];
+  // const imageTagList:number[] = [];
 
   const onImageChange = (event: any) => {
     console.log("onImageChange: event.target.files: " + event.target.files);
@@ -23,12 +34,15 @@ function Galerie() {
       setTag((tag: any) => [...tag, tagList[dropdown]]);
       setBackcolor((backColor: any) => [...backColor, backColorList[dropdown]]);
       setTextcolor((textColor: any) => [...textColor, textColorList[dropdown]]);
-
+      let number:number = dropdown+1;
+      console.log("number: "+number);
+      setImageTagList((imageTagList:number[]) => [...imageTagList, number]);
+      // imageTagList.push(dropdown);
     }
   }
 
   const handleChange = (event: any) => {
-    setDropdown(event.target.value);
+    setDropdown(parseInt(event.target.value));
   }
 
   const handleDelete = (i: number) => {
@@ -45,8 +59,6 @@ function Galerie() {
   }
 
   useEffect(() => {
-    console.log('fuck react should update the state immediatly, dumbass: ' + sizePicker);
-
     switch (sizePicker) {
       case "klein":
         setImagesize(200);
@@ -69,13 +81,40 @@ function Galerie() {
     setTextColorList((textColorList) => [...textColorList, inputTextColor]);
   }
 
-  console.log("Image 1 Url: " + image[0]);
+  const handleFilter = (event: any) => {
+    setFilter(parseInt(event.target.value));
+  }
+
+  console.log("Image " + image);
   console.log("Imagesize: " + sizePicker);
   console.log("TagList: " + tagList);
   console.log("Dropdown: " + dropdown);
   console.log("Backcolor: " + backColor);
   console.log("Imagetags: " + tag);
   console.log("Inputcolor: " + inputColor);
+  console.log("ImageTagList: "+ imageTagList);
+
+  let indices:number[] = [];
+
+  for (let i=0; i < imageTagList.length; i++ ){
+    if ( imageTagList[i] === filter ){
+        indices.push( i );
+    }
+}
+
+  filtered = image.filter((x: any, index: any) => indices.includes(index));
+  filteredTag = tag.filter((x: any, index: any) => indices.includes(index));
+  filteredBackColor = backColor.filter((x: any, index: any) => indices.includes(index));
+  filteredTextColor = textColor.filter((x: any, index: any) => indices.includes(index));
+  imageShown = filter !==0 ? filtered : image;
+  tagShown = filter !==0 ? filteredTag : tag;
+  backColorShown = filter !==0 ? filteredBackColor : backColor;
+  textColorShown = filter !==0 ? filteredTextColor : textColor;
+
+  console.log("Imageshown: "+imageShown);
+  console.log("filtered: "+filtered);
+  console.log("filteredTag: "+filteredTag);
+  console.log("Indices: "+indices);
   return (
     <div className="main">
       <table style={{ width: "100%" }}>
@@ -119,10 +158,13 @@ function Galerie() {
           <td style={{ width: "calc(200%/5)" }}>
             <span style={{ float: "right" }}>
               <label className="filetype">Filter: </label>
-              <select value="alle" id="imagesize">
-                <option value="alle">Alle</option>
-                <option value="keineTags">(Keine Tags)</option>
 
+              <select value={filter} id="imagesize" onChange={handleFilter}>
+                <option value={0}>Alle</option>
+                {/* <option value="keineTags">(Keine Tags)</option> */}
+                {tagList.map((tagList: string, i: number) =>
+                  <option value={i+1} style={{ backgroundColor: backColorList[i], color: textColorList[i] }}>{tagList}</option>
+                )}
               </select>
               <label className="filetype">Bildergröße: </label>
 
@@ -138,12 +180,12 @@ function Galerie() {
       <p> Es {image.length === 1 ? "befindet" : "befinden"} sich {image.length} {image.length === 1 ? "Bild" : "Bilder"} in der Galerie.</p>
 
       <ul className="flex-container">
-        {image.map((image: any, i: any) =>
+        {imageShown.map((image: any, i: any) =>
           <li key={i} className="flex-item">
             <div className="container">
               <img src={image} alt="" height={imagesize} />
-              <div className="tag" style={{ backgroundColor: backColor[i], color: textColor[i] }}>
-                {tag[i]}
+              <div className="tag" style={{ backgroundColor: backColorShown[i], color: textColorShown[i] }}>
+                {tagShown[i]}
               </div>
               <div className="close" onClick={() => handleDelete(i)}>
                 x
