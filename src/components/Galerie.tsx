@@ -50,6 +50,7 @@ function Galerie() {
     setTag(tag.filter((item: any, index) => index !== i));
     setBackcolor(backColor.filter((item: any, index) => index !== i));
     setTextcolor(textColor.filter((item: any, index) => index !== i));
+    setImageTagList(imageTagList.filter((item: any, index) => index !== i));
     console.log("X clicked, i=" + i);
     console.log(image);
   }
