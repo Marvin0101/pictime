@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 function Galerie() {
   const [image, setImage] = useState<any>([]);
+  
   const [tag, setTag] = useState<string[]>([]);
   const [dropdown, setDropdown] = useState<number>(0);
   const [backColor, setBackcolor] = useState<string[]>([]);
@@ -14,7 +15,11 @@ function Galerie() {
   const [input, setInput] = useState<string>('');
   const [inputColor, setInputColor] = useState<string>('#d4d800');
   const [inputTextColor, setInputTextColor] = useState<string>('#a43538');
-  const [filter, setFilter] = useState<number>();
+  const [filter, setFilter] = useState<number>(0);
+  const [imageTagList, setImageTagList] = useState<number[]>([]);
+  let filtered:string[] = [];
+  let imageShown:string[] = [];
+  // const imageTagList:number[] = [];
 
   const onImageChange = (event: any) => {
     console.log("onImageChange: event.target.files: " + event.target.files);
@@ -24,12 +29,15 @@ function Galerie() {
       setTag((tag: any) => [...tag, tagList[dropdown]]);
       setBackcolor((backColor: any) => [...backColor, backColorList[dropdown]]);
       setTextcolor((textColor: any) => [...textColor, textColorList[dropdown]]);
-
+      let number:number = dropdown+1;
+      console.log("number: "+number);
+      setImageTagList((imageTagList:number[]) => [...imageTagList, number]);
+      // imageTagList.push(dropdown);
     }
   }
 
   const handleChange = (event: any) => {
-    setDropdown(event.target.value);
+    setDropdown(parseInt(event.target.value));
   }
 
   const handleDelete = (i: number) => {
@@ -46,8 +54,6 @@ function Galerie() {
   }
 
   useEffect(() => {
-    console.log('fuck react should update the state immediatly, dumbass: ' + sizePicker);
-
     switch (sizePicker) {
       case "klein":
         setImagesize(200);
@@ -71,16 +77,32 @@ function Galerie() {
   }
 
   const handleFilter = (event: any) => {
-    setFilter(event.target.value);
+    setFilter(parseInt(event.target.value));
   }
 
-  console.log("Image 1 Url: " + image[0]);
+  useEffect(() => {
+    console.log('Filter: ' + filter);
+    
+     // eslint-disable-line react-hooks/exhaustive-deps
+    
+  },[filter]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  console.log("Image " + image);
   console.log("Imagesize: " + sizePicker);
   console.log("TagList: " + tagList);
   console.log("Dropdown: " + dropdown);
   console.log("Backcolor: " + backColor);
   console.log("Imagetags: " + tag);
   console.log("Inputcolor: " + inputColor);
+  console.log("ImageTagList: "+ imageTagList);
+
+  let indices:number[] = [];
+  indices.push(imageTagList.indexOf(filter));
+  filtered = image.filter((x: any, index: any) => indices.includes(index));
+  imageShown = filter !==0 ? filtered : image;
+
+  console.log("Imageshown: "+imageShown);
+  console.log("filtered: "+filtered);
   return (
     <div className="main">
       <table style={{ width: "100%" }}>
@@ -126,10 +148,10 @@ function Galerie() {
               <label className="filetype">Filter: </label>
 
               <select value={filter} id="imagesize" onChange={handleFilter}>
-                <option value="alle">Alle</option>
-                <option value="keineTags">(Keine Tags)</option>
+                <option value={0}>Alle</option>
+                {/* <option value="keineTags">(Keine Tags)</option> */}
                 {tagList.map((tagList: string, i: number) =>
-                  <option value={i} style={{ backgroundColor: backColorList[i], color: textColorList[i] }}>{tagList}</option>
+                  <option value={i+1} style={{ backgroundColor: backColorList[i], color: textColorList[i] }}>{tagList}</option>
                 )}
               </select>
               <label className="filetype">Bildergröße: </label>
@@ -146,7 +168,7 @@ function Galerie() {
       <p> Es {image.length === 1 ? "befindet" : "befinden"} sich {image.length} {image.length === 1 ? "Bild" : "Bilder"} in der Galerie.</p>
 
       <ul className="flex-container">
-        {image.map((image: any, i: any) =>
+        {imageShown.map((image: any, i: any) =>
           <li key={i} className="flex-item">
             <div className="container">
               <img src={image} alt="" height={imagesize} />
