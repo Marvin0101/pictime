@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Modalview from "./Modalview";
 
 function Galerie() {
   const [image, setImage] = useState<any>([]);
@@ -16,6 +17,8 @@ function Galerie() {
   const [inputTextColor, setInputTextColor] = useState<string>('#a43538');
   const [filter, setFilter] = useState<number>(0);
   const [imageTagList, setImageTagList] = useState<number[]>([]);
+  const [modalVisible, setModalVisible] = useState<string>("none");
+  const [modalIndex, setModalIndex] = useState<number>(0);
   let filtered:string[] = [];
   let filteredTag:string[] = [];
   let filteredBackColor:string[] = [];
@@ -24,7 +27,7 @@ function Galerie() {
   let tagShown:string[] = [];
   let backColorShown:string[] = [];
   let textColorShown:string[] = [];
-  // const imageTagList:number[] = [];
+  let indices:number[] = [];
 
   const onImageChange = (event: any) => {
     console.log("onImageChange: event.target.files: " + event.target.files);
@@ -34,9 +37,7 @@ function Galerie() {
       setTag((tag: any) => [...tag, tagList[dropdown]]);
       setBackcolor((backColor: any) => [...backColor, backColorList[dropdown]]);
       setTextcolor((textColor: any) => [...textColor, textColorList[dropdown]]);
-
       setImageTagList((imageTagList:number[]) => [...imageTagList, dropdown+1]);
-      // imageTagList.push(dropdown);
     }
   }
 
@@ -85,6 +86,11 @@ function Galerie() {
     setFilter(parseInt(event.target.value));
   }
 
+  const handleImageClick = (i:number) => {
+    setModalVisible("block");
+    setModalIndex(i);
+  }
+
   console.log("Image " + image);
   console.log("Imagesize: " + sizePicker);
   console.log("TagList: " + tagList);
@@ -93,8 +99,6 @@ function Galerie() {
   console.log("Imagetags: " + tag);
   console.log("Inputcolor: " + inputColor);
   console.log("ImageTagList: "+ imageTagList);
-
-  let indices:number[] = [];
 
   for (let i=0; i < imageTagList.length; i++ ){
     if ( imageTagList[i] === filter ){
@@ -115,6 +119,7 @@ function Galerie() {
   console.log("filtered: "+filtered);
   console.log("filteredTag: "+filteredTag);
   console.log("Indices: "+indices);
+
   return (
     <div className="main">
       <table style={{ width: "100%" }}>
@@ -179,11 +184,13 @@ function Galerie() {
       </table>
       <p> Es {image.length === 1 ? "befindet" : "befinden"} sich {image.length} {image.length === 1 ? "Bild" : "Bilder"} in der Galerie.</p>
 
+      <Modalview display={modalVisible} setInvisible = {setModalVisible} imageUrl={imageShown} tag={tagShown} backColor={backColorShown} textColor={textColorShown} modalIndex={modalIndex}/>
+
       <ul className="flex-container">
         {imageShown.map((image: any, i: any) =>
           <li key={i} className="flex-item">
             <div className="container">
-              <img src={image} alt="" height={imagesize} />
+              <img src={image} alt="" height={imagesize} onClick={() => handleImageClick(i)}/>
               <div className="tag" style={{ backgroundColor: backColorShown[i], color: textColorShown[i] }}>
                 {tagShown[i]}
               </div>
