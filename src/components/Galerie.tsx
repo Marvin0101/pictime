@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 function Galerie() {
   const [image, setImage] = useState<any>([]);
   const [tag, setTag] = useState<string[]>([]);
-  const [dropdown, setDropdown] = useState<number>(0);
+  const [dropdown, setDropdown] = useState<number>(-1);
   const [backColor, setBackcolor] = useState<string[]>([]);
   const [textColor, setTextcolor] = useState<string[]>([]);
   const [sizePicker, setSizePicker] = useState<string>("normal");
@@ -34,9 +34,8 @@ function Galerie() {
       setTag((tag: any) => [...tag, tagList[dropdown]]);
       setBackcolor((backColor: any) => [...backColor, backColorList[dropdown]]);
       setTextcolor((textColor: any) => [...textColor, textColorList[dropdown]]);
-      let number:number = dropdown+1;
-      console.log("number: "+number);
-      setImageTagList((imageTagList:number[]) => [...imageTagList, number]);
+
+      setImageTagList((imageTagList:number[]) => [...imageTagList, dropdown+1]);
       // imageTagList.push(dropdown);
     }
   }
@@ -136,7 +135,7 @@ function Galerie() {
 
             <label className="filetype">Tag wählen</label>
             <select value={dropdown} id="tags" onChange={handleChange} className="filetype">
-              <option value="(kein Tag)">(kein Tag)</option>
+              <option value={-1}>(kein Tag)</option>
               {tagList.map((tagList: string, i: number) =>
                 <option value={i} style={{ backgroundColor: backColorList[i], color: textColorList[i] }}>{tagList}</option>
               )}
