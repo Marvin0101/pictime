@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Modal from "./Modal";
 
 function Galerie() {
   const [image, setImage] = useState<any>([]);
@@ -16,6 +17,8 @@ function Galerie() {
   const [inputTextColor, setInputTextColor] = useState<string>('#a43538');
   const [filter, setFilter] = useState<number>(0);
   const [imageTagList, setImageTagList] = useState<number[]>([]);
+  const [modalVisible, setModalVisible] = useState<string>("none");
+  const [modalIndex, setModalIndex] = useState<number>(0);
   let filtered:string[] = [];
   let filteredTag:string[] = [];
   let filteredBackColor:string[] = [];
@@ -83,6 +86,12 @@ function Galerie() {
 
   const handleFilter = (event: any) => {
     setFilter(parseInt(event.target.value));
+  }
+
+  const handleImageClick = (i:number) => {
+    setModalVisible("block");
+    setModalIndex(i);
+
   }
 
   console.log("Image " + image);
@@ -178,12 +187,12 @@ function Galerie() {
         </tr>
       </table>
       <p> Es {image.length === 1 ? "befindet" : "befinden"} sich {image.length} {image.length === 1 ? "Bild" : "Bilder"} in der Galerie.</p>
-
+      <Modal display={modalVisible} setInvisible = {setModalVisible} imageUrl={imageShown} modalIndex={modalIndex}/>
       <ul className="flex-container">
         {imageShown.map((image: any, i: any) =>
           <li key={i} className="flex-item">
             <div className="container">
-              <img src={image} alt="" height={imagesize} />
+              <img src={image} alt="" height={imagesize} onClick={() => handleImageClick(i)}/>
               <div className="tag" style={{ backgroundColor: backColorShown[i], color: textColorShown[i] }}>
                 {tagShown[i]}
               </div>
