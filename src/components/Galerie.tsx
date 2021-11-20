@@ -47,13 +47,24 @@ function Galerie() {
   }
 
   const handleDelete = (i: number) => {
-    setImage(image.filter((x: any, index: any) => index !== i));
-    setTag(tag.filter((item: any, index) => index !== i));
-    setBackcolor(backColor.filter((item: any, index) => index !== i));
-    setTextcolor(textColor.filter((item: any, index) => index !== i));
-    setImageTagList(imageTagList.filter((item: any, index) => index !== i));
-    console.log("X clicked, i=" + i);
-    console.log(image);
+    if(filter !== 0){
+      setImage(image.filter((x: any, index: any) => index !== indices[i]));
+      setTag(tag.filter((item: any, index) => index !== indices[i]));
+      setBackcolor(backColor.filter((item: any, index) => index !== indices[i]));
+      setTextcolor(textColor.filter((item: any, index) => index !== indices[i]));
+      setImageTagList(imageTagList.filter((item: any, index) => index !== indices[i]));
+      console.log("X clicked, i=" + i);
+      console.log(image);
+    } else {
+      setImage(image.filter((x: any, index: any) => index !== i));
+      setTag(tag.filter((item: any, index) => index !== i));
+      setBackcolor(backColor.filter((item: any, index) => index !== i));
+      setTextcolor(textColor.filter((item: any, index) => index !== i));
+      setImageTagList(imageTagList.filter((item: any, index) => index !== i));
+      console.log("X clicked, i=" + i);
+      console.log(image);
+    }
+    
   }
 
   const handleSize = (event: any) => {
