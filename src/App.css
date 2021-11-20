@@ -270,6 +270,7 @@ header p {
   transform: translateY(-50%);
   -webkit-transform: translateY(-50%);
   user-select: none;
+  color:rgb(161, 160, 160);
 
 }
 
@@ -293,6 +294,7 @@ header p {
   transform: translateY(-50%);
   -webkit-transform: translateY(-50%);
   user-select: none;
+  color:rgb(161, 160, 160);
 
 }
 
