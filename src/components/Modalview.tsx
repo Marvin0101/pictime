@@ -40,17 +40,19 @@ function Modalview(props: ModalviewProps) {
 			<div className="modal-content">
 				<span className="closeModal" onClick={close} >&times;</span>
 				<p>PicTime-Galerie</p>
-				<div className="leftswipe" onClick={prevImage}>
-					<div>&lt;</div>
-				</div>
+			
+				
 				<ul className="modal-flex">
 					<li className="modal-container">
-						<img src={props.imageUrl[imageIndex]} alt="" style={{ height: "100%" }} />
+						<img src={props.imageUrl[imageIndex]} alt="" className="imagegallery" />
 						<div className="modal-tag" style={{ backgroundColor: props.backColor[imageIndex], color: props.textColor[imageIndex] }}>
 							{props.tag[imageIndex]}
 						</div>
 					</li>
 				</ul>
+				<div className="leftswipe" onClick={prevImage}>
+					<div>&lt;</div>
+				</div>
 				<div className="rightswipe" onClick={nextImage}>
 					<div>&#062;</div>
 				</div>

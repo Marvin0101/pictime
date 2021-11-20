@@ -9,6 +9,7 @@ function Galerie() {
   const [textColor, setTextcolor] = useState<string[]>([]);
   const [sizePicker, setSizePicker] = useState<string>("normal");
   const [imagesize, setImagesize] = useState<number>(300);
+  const [fontsize, setFontsize] = useState<number>(20);
   const [tagList, setTagList] = useState<string[]>([]);
   const [backColorList, setBackColorList] = useState<string[]>([]);
   const [textColorList, setTextColorList] = useState<string[]>([]);
@@ -63,14 +64,17 @@ function Galerie() {
     switch (sizePicker) {
       case "klein":
         setImagesize(200);
+        setFontsize(20);
         console.log("klein");
         break;
       case "normal":
         setImagesize(300);
+        setFontsize(25);
         console.log("normal");
         break;
       case "gross":
         setImagesize(400);
+        setFontsize(30);
         console.log("groß");
         break;
     }
@@ -190,8 +194,8 @@ function Galerie() {
         {imageShown.map((image: any, i: any) =>
           <li key={i} className="flex-item">
             <div className="container">
-              <img src={image} alt="" height={imagesize} onClick={() => handleImageClick(i)}/>
-              <div className="tag" style={{ backgroundColor: backColorShown[i], color: textColorShown[i] }}>
+              <img src={image} alt="" style={{maxHeight:imagesize}} onClick={() => handleImageClick(i)} className="imageview"/>
+              <div className="tag" style={{ backgroundColor: backColorShown[i], color: textColorShown[i], fontSize: fontsize }}>
                 {tagShown[i]}
               </div>
               <div className="close" onClick={() => handleDelete(i)}>
