@@ -10,7 +10,6 @@ export interface ModalviewProps {
 
 export interface ImageProps {
     image:string;
-    // setInvisible:React.Dispatch<React.SetStateAction<string>>;
     tag:string;
     backColor:string;
     textColor:string;

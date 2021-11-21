@@ -1,9 +1,7 @@
 import React from "react";
 import { ImageProps } from "../Pictime.types";
 
-
 function Image(props: ImageProps) {
-
 
   return (
     <li key={props.index} className="flex-item">

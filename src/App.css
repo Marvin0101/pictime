@@ -1,7 +1,7 @@
 body{
   background-color: rgb(56, 54, 54);
-  
 }
+
 .App {
   text-align: center;
   color: rgb(161, 160, 160);
@@ -31,7 +31,6 @@ button:hover {
   margin-left: 10px;
   margin-right: 10px;
   list-style: none;
-  /* border: 1px solid silver; */
   -ms-box-orient: horizontal;
   display: -webkit-box;
   display: -moz-box;
@@ -39,6 +38,8 @@ button:hover {
   display: -moz-flex;
   display: -webkit-flex;
   display: flex;
+  /* align-items: stretch; */
+  align-content: flex-start;
   flex-wrap: wrap;
   min-height: 50vh;
 }
@@ -46,12 +47,10 @@ button:hover {
 .flex-item {
   margin: 5px;
   max-width: 100%;
-
 }
 
 .imageview {
   max-width: 100%;
-  
 }
 
 .imagegallery {
@@ -59,17 +58,16 @@ button:hover {
   height: 100%;
 }
 
-
 .container:hover {
   z-index: 2;
   transform: scale(1.2); 
-
 }
 
 .container {
   position: relative;
   transition: transform .2s;
 }
+
 .tag {
   opacity: 0.7;
   float: left;
@@ -130,7 +128,6 @@ button:hover {
   opacity: 0.7;
 }
 
-
 .filetype {
   margin: 5px;
 }
@@ -185,7 +182,6 @@ header p {
 .footer p {
   margin: 0px;
   padding-bottom: 8px;
-  
 }
 
 #labelbutton {
@@ -207,22 +203,19 @@ header p {
   background-color: rgb(102, 141, 185);
 }
 
-/* The Modal (background) */
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 3; /* Sit on top */
-  padding-top: 0px; /* Location of the box */
+  display: none;
+  position: fixed; 
+  z-index: 3; 
+  padding-top: 0px; 
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  /* /* background-color: rgba(0,0,0,0.4); Black w/ opacity */
+  width: 100%; 
+  height: 100%; 
+  overflow: auto;
+  background-color: rgb(0,0,0);
 }
 
-/* Modal Content */
 .modal-content {
   position: absolute;
   background-color: #000000;
@@ -235,7 +228,6 @@ header p {
   width: 99%;
 }
 
-/* The Close Button */
 .closeModal {
   color: #aaaaaa;
   float: right;
@@ -261,7 +253,6 @@ header p {
   /* background-color: rgb(51, 50, 50); */
   font-size: 100px;
   line-height: 400px;
-
 }
 
 .leftswipe div {
@@ -271,7 +262,6 @@ header p {
   -webkit-transform: translateY(-50%);
   user-select: none;
   color:rgb(161, 160, 160);
-
 }
 
 .rightswipe {
@@ -298,8 +288,6 @@ header p {
 
 }
 
-
-
 .modal-flex {
   padding: 0;
   height: 90%;
@@ -316,13 +304,12 @@ header p {
 
 }
 
-
-
 .modal-container {
   position: relative;
   height: 100%;
   transition: transform .2s;
   max-width: 90%;
+
 }
 .modal-tag {
   opacity: 0.7;

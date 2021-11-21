@@ -145,7 +145,15 @@ function Galerie() {
         <tr>
           <td style={{ width: "calc(200%/5)" }} >
             <span style={{ float: "left" }}>
-              <Tagcreator inputtext={input} inputcolor={inputColor} inputtextcolor={inputTextColor} handler={handleCreateTag} setInputtext={setInput} setInputcolor={setInputColor} setInputtextcolor={setInputTextColor}/>
+              <Tagcreator 
+                inputtext={input} 
+                inputcolor={inputColor} 
+                inputtextcolor={inputTextColor} 
+                handler={handleCreateTag} 
+                setInputtext={setInput} 
+                setInputcolor={setInputColor} 
+                setInputtextcolor={setInputTextColor}
+              />
             </span>
           </td>
           <td style={{ width: "calc(100%/5)" }}>

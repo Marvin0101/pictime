@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ModalviewProps } from "../Pictime.types";
 
-
 function Modalview(props: ModalviewProps) {
 
 	const [imageIndex, setImageIndex] = useState<number>(props.modalIndex);
