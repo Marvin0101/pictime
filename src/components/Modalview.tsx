@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ModalviewProps } from "../Pictime.types";
 
-
 function Modalview(props: ModalviewProps) {
 
 	const [imageIndex, setImageIndex] = useState<number>(props.modalIndex);
@@ -31,17 +30,15 @@ function Modalview(props: ModalviewProps) {
 		setImageIndex(props.modalIndex);
 	}
 
-	console.log("Modalprops: " + props.imageUrl);
-	console.log("Modalprops: " + props.modalIndex);
-	console.log("ModalImageIndex: " + imageIndex);
+	// console.log("Modalprops: " + props.imageUrl);
+	// console.log("Modalprops: " + props.modalIndex);
+	// console.log("ModalImageIndex: " + imageIndex);
 
 	return (
 		<div className="modal" style={{ display: props.display }}>
 			<div className="modal-content">
 				<span className="closeModal" onClick={close} >&times;</span>
-				<p>PicTime-Galerie</p>
-			
-				
+				<p style={{color:"rgb(161, 160, 160)"}}>PicTime-Galerie</p>
 				<ul className="modal-flex">
 					<li className="modal-container">
 						<img src={props.imageUrl[imageIndex]} alt="" className="imagegallery" />
